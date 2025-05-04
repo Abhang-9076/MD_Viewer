@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Markdown Viewer</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f4f4f4;
+    }
+    h1 {
+      font-size: 24px;
+    }
+    #output {
+      margin-top: 20px;
+      padding: 20px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    pre, code {
+      background-color: #eee;
+      padding: 5px;
+      border-radius: 4px;
+    }
+  </style>
+  <!-- Load Marked.js (deferred so it’s available when our script runs) -->
+  <script defer src="https://cdn.jsdelivr.net/npm/marked@4.3.0/marked.min.js"></script>
+</head>
+<body>
+
+  <h1>📝 Markdown Viewer</h1>
+  <input type="file" id="fileInput" accept=".md,.markdown" />
+  <div id="output"></div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const fileInput = document.getElementById('fileInput');
+      const output = document.getElementById('output');
+
+      fileInput.addEventListener('change', () => {
+        const file = fileInput.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = e => {
+          // Use marked.parse() (or marked()) to convert markdown to HTML
+          output.innerHTML = marked.parse(e.target.result);
+        };
+        reader.readAsText(file);
+      });
+    });
+  </script>
+
+</body>
+</html>
